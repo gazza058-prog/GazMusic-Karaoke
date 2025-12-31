@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Karaoke</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; margin: 0; }
+        #lyrics { font-size: 2.8rem; margin: 80px 0; font-weight: bold; text-shadow: 0 0 20px rgba(255,255,255,0.5); transition: 0.4s; }
+        .controls { background: #111; padding: 30px; border-radius: 30px; border: 1px solid #222; }
+        input[type=range] { width: 100%; margin: 20px 0; height: 15px; accent-color: #007bff; }
+        button { width: 100%; padding: 20px; background: #007bff; color: #fff; border: none; border-radius: 15px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="lyrics">AND I-I-I...</div>
+    <div class="controls">
+        <label>Vocal Detection (Auto-Color Test)</label>
+        <input type="range" min="80" max="300" value="120" oninput="updateColor(this.value)">
+        <label>Key Shift</label>
+        <input type="range" min="-5" max="5" value="0">
+        <button onclick="Tone.start(); alert('Audio Engine Active!')">ACTIVATE APP</button>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+        function updateColor(hz) {
+            const l = document.getElementById('lyrics');
+            if(hz < 155) { l.style.color = '#87CEEB'; l.style.textShadow = '0 0 20px #007bff'; } // Male/Blue
+            else if(hz > 185) { l.style.color = '#FFC0CB'; l.style.textShadow = '0 0 20px #ffc0cb'; } // Female/Pink
+            else { l.style.color = '#90EE90'; l.style.textShadow = '0 0 20px #90ee90'; } // Duet/Green
+        }
+    </script>
+</body>
+</html>
